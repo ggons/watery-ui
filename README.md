@@ -1,67 +1,80 @@
-## Watery-UI
+# Watery-UI
 
-Watery UI 는 React 애플리케이션을 더욱 빠르고 효율적으로 구축할 수 있도록 돕는 UI 컴포넌트 라이브러리입니다.
+Watery UI is a UI component library that helps you deploy React applications faster and more efficiently.
 
 ## Table of contents
 
-- Installation
-- Modal
+- <a href="#Installation">Installation</a>
+- <a href="#Modal">Modal</a>
 
 ## Installation
 
 To install, you can use npm or yarn:
 
-    $ npm install --save watery-ui
-    $ yarn add watery-ui
+```
+$ npm install --save watery-ui
+$ yarn add watery-ui
+```
 
 ## Modal
 
 First, add a provider.
 
-    import { ModalProvider } from 'watery-ui';
+```
+import { ModalProvider } from 'watery-ui';
 
-    <ModalProvider>
-      <App />
-    </ModalProvider>
+<ModalProvider>
+  <App />
+</ModalProvider>
+```
 
 Get openModal from useModal. And use openModal.
 
-    import { useModal } from 'watery-ui';
+```
+import { useModal } from 'watery-ui';
 
-    function ModalSample() {
-      const { openModal } = useModal();
+function ModalSample() {
+  const { openModal } = useModal();
 
-      const handleOpenModalBtnClick = () => {
-        openModal({
-          Comp: ({ onConfirm, onClose }) => {
-            return (
-              <div>
-                <h2>MODAL</h2>
-                <button onClick={onConfirm}>CONFIRM</button>
-                <button onClick={onClose}>CLOSE</button>
-              </div>
-            )
-          }
-        })
+  const handleOpenModalBtnClick = () => {
+    openModal({
+      Comp: ({ onConfirm, onClose }) => {
+        return (
+          <div>
+            <h2>MODAL</h2>
+            <button onClick={() => onConfirm()}>CONFIRM</button>
+            <button onClick={() => onClose()}>CLOSE</button>
+          </div>
+        )
       }
+    })
+  }
 
-      return (
-        <button onClick={handleOpenModalBtnClick}>OPEN MODAL</button>
-      )
-    }
+  return (
+    <button onClick={handleOpenModalBtnClick}>OPEN MODAL</button>
+  )
+}
+```
 
-- openModal(params)
+### openModal(params)
 
-<table style="margin-left: 40px;">
+The return value of openModal is in the form of Promise.
+
+The return value is { isConfirm, data }.
+
+- isConfirm: If onConfirm is operated, it has a true value, and if it is onClose, it has a false value.
+- data: If a value is sent to the first factor of onConfirm or onClose, the value is returned by putting it in the data.
+
+<table style="margin: 10px 0;">
   <tr>
     <th>Name</th>
     <th>Description</th>
     <th>Default</th>
   </tr>
   <tr>
-    <td>Comp</td>
+    <td>Modal</td>
     <td>
-      (function) Feel free to write modal content. Use onConfirm, onClose delivered.
+      (function) Feel free to write modal. Use onConfirm, onClose delivered.
     </td>
     <td></td>
   </tr>
@@ -94,3 +107,36 @@ Get openModal from useModal. And use openModal.
     <td></td>
   </tr>
 </table>
+
+#### Examples
+
+```
+  const handleModalOpenBtnClick = async () => {
+    const result = await openModal({
+      Comp: ({ onConfirm, onClose }) => (
+        <div>
+          <h2>MODAL</h2>
+          <button onClick={() => onConfirm('Confirm')}>CONFIRM MODAL</button>
+          <button onClick={() => onClose('Close')}>CLOSE MODAL</button>
+        </div>
+      ),
+      onOk: () => {
+        console.log('onOk');
+      },
+      onCancel: () => {
+        console.log('onCancel');
+      },
+      overlayClose: true,
+    });
+
+    console.log(result);
+
+    // When you click CONFIRM MODAL
+    // output: onOk
+    // output: { isConfirm: true, data: 'Confirm' }
+
+    // When you click CLOSE MODAL
+    // output: onCancel
+    // output: { isConfirm: false, data: 'Close' }
+  };
+```

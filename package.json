@@ -1,6 +1,6 @@
 {
   "name": "watery-ui",
-  "version": "0.0.4",
+  "version": "0.0.7",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "description": "React UI Component - Watery UI",
@@ -11,6 +11,12 @@
     "modal",
     "ui"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ggons/watery-ui.git"
+  },
+  "homepage": "https://github.com/ggons/watery-ui",
+  "bugs": "https://github.com/ggons/watery-ui/issues",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",

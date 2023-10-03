@@ -1,6 +1,6 @@
 import React from 'react';
 export interface IOpenModalProps {
-    Comp?: () => React.ReactNode;
+    Modal?: () => React.ReactNode;
     header?: React.ReactNode;
     body: React.ReactNode;
     overlayClose?: boolean;

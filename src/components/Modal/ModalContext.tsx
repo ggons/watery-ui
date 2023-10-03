@@ -2,7 +2,7 @@ import React, { useState, useCallback, createContext } from 'react';
 import ReactDOM from 'react-dom';
 
 export interface IOpenModalProps {
-  Comp?: () => React.ReactNode;
+  Modal?: () => React.ReactNode;
   header?: React.ReactNode;
   body: React.ReactNode;
   overlayClose?: boolean;
@@ -16,8 +16,8 @@ export interface IOpenModalProps {
 
 type TModalState = IOpenModalProps & {
   id: string;
-  onClose: () => void;
-  onConfirm: () => void;
+  onClose: (data?: any) => void;
+  onConfirm: (data?: any) => void;
 };
 
 export const ModalContext = createContext({
@@ -33,7 +33,7 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
 
   const openModal = useCallback(
     ({
-      Comp,
+      Modal,
       header,
       body,
       overlayClose = false,
@@ -45,16 +45,22 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
       return new Promise((resolve) => {
         const id = String(Date.now());
 
-        const onClose = () => {
+        const onClose = (data = undefined) => {
           onCancel && onCancel();
           closeModal(id);
-          resolve(false);
+          resolve({
+            isConfirm: false,
+            data,
+          });
         };
 
-        const onConfirm = () => {
+        const onConfirm = (data = undefined) => {
           onOk && onOk();
           closeModal(id);
-          resolve(true);
+          resolve({
+            isConfirm: true,
+            data,
+          });
         };
 
         setModals((prevState) => {
@@ -62,7 +68,7 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
             ...prevState,
             {
               id,
-              Comp,
+              Modal,
               header,
               body,
               overlayClose,
@@ -96,7 +102,7 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
       {modals.map(
         ({
           id,
-          Comp,
+          Modal,
           header,
           body,
           overlayClose,
@@ -129,8 +135,8 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
                   ? { onClick: (e) => handleBackdropClick(e, onClose) }
                   : {})}
               >
-                {Comp ? (
-                  React.cloneElement((<Comp />) as React.ReactElement, {
+                {Modal ? (
+                  React.cloneElement((<Modal />) as React.ReactElement, {
                     onConfirm,
                     onClose,
                   })
@@ -167,7 +173,7 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
                         {onConfirm && (
                           <button
                             className="grow rounded-md text-lg bg-gray-700 text-white hover:bg-gray-800 active:bg-gray-900"
-                            onClick={onConfirm}
+                            onClick={() => onConfirm()}
                           >
                             확인
                           </button>
@@ -175,7 +181,7 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
                         {(closeButton || onCancel) && (
                           <button
                             className="grow rounded-md text-gray-700 hover:bg-gray-100 active:bg-gray-200"
-                            onClick={onClose}
+                            onClick={() => onClose()}
                           >
                             취소
                           </button>
