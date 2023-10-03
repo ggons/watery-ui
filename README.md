@@ -18,7 +18,13 @@ $ yarn add watery-ui
 
 ## Modal
 
-First, add a provider.
+You can make modals and use them in the style you want.
+
+Modals can operate synchronously/asynchronously,
+
+You can also pass the value to the place called within the modal.
+
+1. First, add a provider.
 
 ```
 import { ModalProvider } from 'watery-ui';
@@ -28,7 +34,7 @@ import { ModalProvider } from 'watery-ui';
 </ModalProvider>
 ```
 
-Get openModal from useModal. And use openModal.
+2. Get openModal from useModal. And use openModal.
 
 ```
 import { useModal } from 'watery-ui';
@@ -113,7 +119,7 @@ The return value is { isConfirm, data }.
 ```
   const handleModalOpenBtnClick = async () => {
     const result = await openModal({
-      Comp: ({ onConfirm, onClose }) => (
+      Modal: ({ onConfirm, onClose }) => (
         <div>
           <h2>MODAL</h2>
           <button onClick={() => onConfirm('Confirm')}>CONFIRM MODAL</button>
