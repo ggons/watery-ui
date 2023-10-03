@@ -44,7 +44,7 @@ function ModalSample() {
 
   const handleOpenModalBtnClick = () => {
     openModal({
-      Comp: ({ onConfirm, onClose }) => {
+      Modal: ({ onConfirm, onClose }) => {
         return (
           <div>
             <h2>MODAL</h2>
