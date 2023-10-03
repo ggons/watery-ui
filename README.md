@@ -1,70 +1,96 @@
-# Getting Started with Create React App
+## Watery-UI
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Watery UI 는 React 애플리케이션을 더욱 빠르고 효율적으로 구축할 수 있도록 돕는 UI 컴포넌트 라이브러리입니다.
 
-## Available Scripts
+## Table of contents
 
-In the project directory, you can run:
+- Installation
+- Modal
 
-### `npm start`
+## Installation
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+To install, you can use npm or yarn:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+    $ npm install --save watery-ui
+    $ yarn add watery-ui
 
-### `npm test`
+## Modal
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+First, add a provider.
 
-### `npm run build`
+    import { ModalProvider } from 'watery-ui';
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    <ModalProvider>
+      <App />
+    </ModalProvider>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Get openModal from useModal. And use openModal.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    import { useModal } from 'watery-ui';
 
-### `npm run eject`
+    function ModalSample() {
+      const { openModal } = useModal();
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+      const handleOpenModalBtnClick = () => {
+        openModal({
+          Comp: ({ onConfirm, onClose }) => {
+            return (
+              <div>
+                <h2>MODAL</h2>
+                <button onClick={onConfirm}>CONFIRM</button>
+                <button onClick={onClose}>CLOSE</button>
+              </div>
+            )
+          }
+        })
+      }
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+      return (
+        <button onClick={handleOpenModalBtnClick}>OPEN MODAL</button>
+      )
+    }
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- openModal(params)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<table style="margin-left: 40px;">
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <td>Comp</td>
+    <td>
+      (function) Feel free to write modal content. Use onConfirm, onClose delivered.
+    </td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>overlayClose</td>
+    <td>
+      (boolean) Whether to close when you click Overlay
+    </td>
+    <td>false</td>
+  </tr>
+  <tr>
+    <td>onOk</td>
+    <td>
+      (function) It is a function that runs within onConfirm.
+    </td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>onCancel</td>
+    <td>
+      (function) It is a function that runs within the onCancel.
+    </td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>overlayStyle</td>
+    <td>
+      (object) Create a style to apply to Overlay.
+    </td>
+    <td></td>
+  </tr>
+</table>
