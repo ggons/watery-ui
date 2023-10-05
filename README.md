@@ -1,6 +1,7 @@
 # Watery-UI
 
 Watery UI is a UI component library that helps you deploy React applications faster and more efficiently.
+Currently, only the modal has been developed, and we plan to gradually add other features/components.
 
 ## Table of contents
 
